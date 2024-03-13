@@ -1,0 +1,73 @@
+databaseChangeLog:
+  - changeSet:
+      id: 01_create_table_address
+      author: postgres
+      changes:
+        - sqlFile:
+            path: scripts/01_create_table_address.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 02_create_table_users
+      author: postgres
+      changes:
+        - sqlFile:
+            path: scripts/02_create_table_users.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 03_create_table_restaurants
+      author: postgres
+      changes:
+        - sqlFile:
+            path: scripts/03_create_table_restaurants.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 04_create_table_ratings
+      author: postgres
+      changes:
+        - sqlFile:
+            path: scripts/04_create_table_ratings.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 05_create_table_reservations
+      author: postgres
+      changes:
+        - sqlFile:
+            path: scripts/05_create_table_reservations.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 06_insert_into_address
+      author: postgres
+      changes:
+        - sqlFile:
+            path: scripts/06_insert_into_address.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 07_insert_into_users
+      author: postgres
+      changes:
+        - sqlFile:
+            path: scripts/07_insert_into_users.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 08_insert_into_restaurants
+      author: postgres
+      changes:
+        - sqlFile:
+            path: scripts/08_insert_into_restaurants.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true

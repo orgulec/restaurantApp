@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS address
+(
+    id  BIGINT AUTO_INCREMENT PRIMARY KEY,
+    street    VARCHAR(128) NOT NULL,
+    number    VARCHAR(128) NOT NULL,
+    city    VARCHAR(128) NOT NULL,
+    zip_code    VARCHAR(128) NOT NULL,
+    country    VARCHAR(128) NOT NULL
+);
