@@ -17,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
@@ -28,7 +30,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers("/login/**").permitAll()
-
+                                .requestMatchers("/users/**").permitAll()
                                 ).httpBasic(Customizer.withDefaults());
         return http.build();
     }
@@ -50,7 +52,7 @@ public class SecurityConfig {
                 .password(encoder().encode("12345"))
                 .roles("USER")
                 .build();
-        return new InMemoryUserDetailsManager(restaurator,client);
+        return new InMemoryUserDetailsManager(List.of(restaurator,client));
     }
 
     @Bean
