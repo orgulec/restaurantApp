@@ -29,30 +29,38 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
                         auth
+                                .requestMatchers("/reservations/**").hasAnyRole("USER","ADMIN")
+                                .requestMatchers("/restaurant/**").hasAnyRole("USER","ADMIN")
+                                .requestMatchers("/ratings/**").hasAnyRole("USER","ADMIN")
                                 .requestMatchers("/login/**").permitAll()
                                 .requestMatchers("/users/**").permitAll()
+                                .requestMatchers("/**").permitAll()
                                 ).httpBasic(Customizer.withDefaults());
         return http.build();
     }
 
-    @Bean
-    public PasswordEncoder encoder(){
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public PasswordEncoder encoder(){
+//        return new BCryptPasswordEncoder();
+//    }
 
     @Bean
     UserDetailsService userDetailsService(){
-        UserDetails restaurator = User.builder()
+//        UserDetails restaurator = User.builder()
+        UserDetails restaurator = User.withDefaultPasswordEncoder()
                 .username("geslerowa")
-                .password(encoder().encode("bestfood"))
+//                .password(encoder().encode("bestfood"))
+                .password("bestfood")
                 .roles("ADMIN")
                 .build();
-        UserDetails client = User.builder()
+//        UserDetails client = User.builder()
+        UserDetails client = User.withDefaultPasswordEncoder()
                 .username("jasko")
-                .password(encoder().encode("12345"))
+//                .password(encoder().encode("12345"))
+                .password("12345")
                 .roles("USER")
                 .build();
-        return new InMemoryUserDetailsManager(List.of(restaurator,client));
+        return new InMemoryUserDetailsManager(restaurator,client);
     }
 
     @Bean

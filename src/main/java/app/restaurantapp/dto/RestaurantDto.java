@@ -18,10 +18,9 @@ public class RestaurantDto {
     private String description;
     private Integer seatsNumber;
     private Integer tablesNumber;
-    private String openFromHour;
-    private String openToHour;
+    private Integer openFromHour;
+    private Integer openToHour;
     private String phoneNumber;
-    private Set<RatingModel> ratings;
 
     @Override
     public String toString() {
@@ -36,7 +35,6 @@ public class RestaurantDto {
                 ", openFromHour='" + openFromHour + '\'' +
                 ", openToHour='" + openToHour + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", ratings=" + ratings +
                 '}';
     }
 }

@@ -1,6 +1,7 @@
 package app.restaurantapp.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,6 +10,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+//@JsonIgnoreProperties("restaurant")
 @Table(name = "RATINGS")
 public class RatingModel {
     @Id
@@ -17,13 +19,13 @@ public class RatingModel {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "restaurant_id", nullable = false)
-    @JsonBackReference
+    @JoinColumn(name = "restaurants_id")
+    @JsonBackReference("restaurant")
     private RestaurantModel restaurant;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
+    @JoinColumn(name = "user_id")
+    @JsonBackReference("user")
     private UserModel user;
 
     @Column(name = "RATING")

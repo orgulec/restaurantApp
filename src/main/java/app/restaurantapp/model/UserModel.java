@@ -1,6 +1,7 @@
 package app.restaurantapp.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,6 +12,7 @@ import java.util.Objects;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties("restaurant")
 @Table(name = "USERS")
 public class UserModel {
     @Id
@@ -38,7 +40,7 @@ public class UserModel {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "restaurant_id")
-    @JsonBackReference
+    @JsonBackReference("restaurant")
     private RestaurantModel restaurant;
 
     @Override

@@ -30,5 +30,13 @@ public class ExceptionsHandler {
     public ResponseEntity<String> handleNotEnoughSeatsForReservationException(NotEnoughSeatsForReservationException ex){
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(ex.getMessage());
     }
+    @ExceptionHandler(NoRatingsFoundedException.class)
+    public ResponseEntity<String> handleNoRatingsFoundedException(NoRatingsFoundedException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+    @ExceptionHandler(ReservationTimeAndDateException.class)
+    public ResponseEntity<String> handleReservationTimeAndDateException(ReservationTimeAndDateException ex){
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(ex.getMessage());
+    }
 
 }

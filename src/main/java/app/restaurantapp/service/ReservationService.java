@@ -7,6 +7,7 @@ import app.restaurantapp.model.RestaurantModel;
 import app.restaurantapp.model.UserModel;
 import app.restaurantapp.repository.ReservationRepository;
 import app.restaurantapp.utils.exceptions.NotEnoughSeatsForReservationException;
+import app.restaurantapp.utils.exceptions.ReservationTimeAndDateException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,8 @@ public class ReservationService {
         };
 
         List<ReservationModel> allReservationsByDate = getAllReservationsByIdAndDate(restaurant.getId(), reservation.getReservationDate());
+        allReservationsByDate.forEach(System.out::println);
+
         allReservationsByDate.forEach(res -> {
             if (Objects.equals(res.getReservationHour(), reservation.getReservationHour())) {
                 Seats.seatsLeft -= res.getSeatsNumber();
@@ -51,6 +54,9 @@ public class ReservationService {
 
         if (Seats.seatsLeft < restaurant.getSeatsNumber() || Seats.tablesLeft < reservation.getTablesNumber()) {
             throw new NotEnoughSeatsForReservationException();
+        }
+        if(reservation.getReservationHour() >= restaurant.getOpenToHour()-1){
+            throw new ReservationTimeAndDateException("This hour is too late for reservation");
         }
 
         ReservationModel newReservation = new ReservationModel();

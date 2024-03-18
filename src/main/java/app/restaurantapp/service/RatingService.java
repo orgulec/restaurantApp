@@ -5,6 +5,7 @@ import app.restaurantapp.model.RatingModel;
 import app.restaurantapp.model.RestaurantModel;
 import app.restaurantapp.model.UserModel;
 import app.restaurantapp.repository.RatingRepository;
+import app.restaurantapp.utils.exceptions.NoRatingsFoundedException;
 import app.restaurantapp.utils.exceptions.RatingNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -37,5 +38,13 @@ public class RatingService {
             throw new RatingNotFoundException(id);
         }
         return ratings;
+    }
+
+    public List<RatingModel> getAll() {
+        List<RatingModel> allRatings = ratingRepository.findAll();
+        if(allRatings.isEmpty()){
+            throw new NoRatingsFoundedException();
+        }
+        return allRatings;
     }
 }

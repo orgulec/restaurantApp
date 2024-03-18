@@ -71,3 +71,22 @@ databaseChangeLog:
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
+  - changeSet:
+      id: 09_insert_into_ratings
+      author: postgres
+      changes:
+        - sqlFile:
+            path: scripts/09_insert_into_ratings.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+
+  - changeSet:
+      id: 010_insert_into_reservations
+      author: postgres
+      changes:
+        - sqlFile:
+            path: scripts/010_insert_into_reservations.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true

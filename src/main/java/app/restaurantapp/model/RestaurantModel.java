@@ -1,6 +1,7 @@
 package app.restaurantapp.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,6 +14,7 @@ import java.util.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties("user")
 @Table(name = "RESTAURANTS")
 public class RestaurantModel {
     @Id
@@ -25,12 +27,12 @@ public class RestaurantModel {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @JsonManagedReference
+    @JsonManagedReference("user")
     private UserModel owner;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
-    @JsonBackReference("adrs")
+    @JsonBackReference("address")
     private Address address;
 
     @Column(name = "TYPE")
@@ -46,27 +48,16 @@ public class RestaurantModel {
     private Integer tablesNumber;
 
     @Column(name = "OPEN_FROM")
-    private String openFromHour;
+    private Integer openFromHour;
     @Column(name = "OPEN_TO")
-    private String openToHour;
+    private Integer openToHour;
 
     @Column(name = "PHONE", length = 12)
     private String phoneNumber;
 
+//    @Column(name = "RATINGS")
 //    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonBackReference("ratings")
 //    private List<RatingModel> ratings = new ArrayStack<>();
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        RestaurantModel that = (RestaurantModel) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(owner, that.owner) && Objects.equals(address, that.address) && kitchenType == that.kitchenType && Objects.equals(description, that.description) && Objects.equals(seatsNumber, that.seatsNumber) && Objects.equals(tablesNumber, that.tablesNumber) && Objects.equals(openFromHour, that.openFromHour) && Objects.equals(openToHour, that.openToHour) && Objects.equals(phoneNumber, that.phoneNumber);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, owner, address, kitchenType, description, seatsNumber, tablesNumber, openFromHour, openToHour, phoneNumber);
-    }
 }

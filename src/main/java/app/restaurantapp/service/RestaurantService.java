@@ -9,19 +9,19 @@ import app.restaurantapp.utils.exceptions.RestaurantNotFoundException;
 import app.restaurantapp.utils.exceptions.UserNotPermittedException;
 import app.restaurantapp.utils.mappers.RestaurantMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
     private final UserService userService;
-//    private final RatingService ratingService;
 
 
     public RestaurantModel getRestaurantById(Long restaurantId) {
@@ -29,11 +29,7 @@ public class RestaurantService {
         if(restaurantOpt.isEmpty()) {
             throw new RestaurantNotFoundException(restaurantId);
         }
-        RestaurantModel restaurant = restaurantOpt.get();
-
-//        List<RatingModel> ratings = ratingService.getRatingsByRestaurantId(restaurant.getId());
-//        restaurant.setRatings(ratings);
-        return restaurant;
+        return restaurantOpt.get();
     }
     public RestaurantDto getRestaurantDtoById(Long restaurantId) {
         Optional<RestaurantModel> restaurantOpt = restaurantRepository.findById(restaurantId);
@@ -49,11 +45,13 @@ public class RestaurantService {
                 .map(new RestaurantMapper()::toDto).collect(Collectors.toList());
     }
 
-
     public RestaurantModel addNewRestaurant(RestaurantDto restaurantDto) {
         UserModel restaurantOwner = userService.getUserById(restaurantDto.getOwner());
         if(!restaurantOwner.isRestaurantOwner()){
-            throw new UserNotPermittedException("You are not permitted to add new restaurant.");
+            throw new UserNotPermittedException("User is not permitted to add new restaurant.");
+        }
+        if(restaurantOwner.getRestaurant()!=null){
+            throw new UserNotPermittedException("User already have a restaurant.");
         }
         RestaurantMapper mapper = new RestaurantMapper();
         RestaurantModel newRestaurant = mapper.toModel(restaurantDto);

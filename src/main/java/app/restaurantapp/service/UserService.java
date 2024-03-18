@@ -33,8 +33,17 @@ public class UserService {
         mappedUsers.forEach(UserDto::hideLastname);
         return mappedUsers;
     }
-    
 
 
-
+    public UserModel createUser(UserModel user) {
+        UserModel newUser = new UserModel();
+        newUser.setFirstName(user.getFirstName());
+        newUser.setLastName(user.getLastName());
+        newUser.setEmail(user.getEmail());
+        newUser.setUsername(user.getUsername());
+        newUser.setPassword(user.getPassword());
+        newUser.setRestaurantOwner(user.isRestaurantOwner());
+        newUser.setRestaurant(user.getRestaurant());
+        return userRepository.save(newUser);
+    }
 }
